@@ -10,9 +10,9 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	mock.MockServer.Start()
+	mock.MockServer.Enable()
 	code := m.Run()
-	mock.MockServer.Stop()
+	mock.MockServer.Disable()
 	os.Exit(code)
 }
 

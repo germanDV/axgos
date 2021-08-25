@@ -14,6 +14,7 @@ import (
 )
 
 const (
+	defaultMaxConnectionsPerHost     = 5
 	defaultMaxIdleConnectionsPerHost = 5
 	defaultResponseTimeout           = 5 * time.Second
 	defaultConnectionTimeout         = 2 * time.Second
@@ -68,6 +69,8 @@ func (c *axgosClient) do(method string, url string, headers http.Header, body in
 	return &response, nil
 }
 
+// getAxgosClient returns the existing client or creates it if it doesn't exist.
+// If mocks are enabled, it returns a mock client.
 func (c *axgosClient) getAxgosClient() core.AxgosHttpClient {
 	if mock.MockServer.IsEnabled() {
 		return mock.MockServer.GetClient()
@@ -84,6 +87,7 @@ func (c *axgosClient) getAxgosClient() core.AxgosHttpClient {
 		c.client = &http.Client{
 			Timeout: c.getConnectionTimeout() + c.getResponseTimeout(),
 			Transport: &http.Transport{
+				MaxConnsPerHost:       c.getMaxConnectionsPerHost(),
 				MaxIdleConnsPerHost:   c.getMaxIdleConnectionsPerHost(),
 				ResponseHeaderTimeout: c.getResponseTimeout(),
 				DialContext:           (&net.Dialer{Timeout: c.getConnectionTimeout()}).DialContext,
@@ -92,6 +96,13 @@ func (c *axgosClient) getAxgosClient() core.AxgosHttpClient {
 	})
 
 	return c.client
+}
+
+func (c *axgosClient) getMaxConnectionsPerHost() int {
+	if c.builder.maxConnectionsPerHost > 0 {
+		return c.builder.maxConnectionsPerHost
+	}
+	return defaultMaxConnectionsPerHost
 }
 
 func (c *axgosClient) getMaxIdleConnectionsPerHost() int {

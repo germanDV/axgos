@@ -38,26 +38,34 @@ func (m *mockServer) cleanBody(body string) string {
 	return body
 }
 
+// GetClient returns the http client stored in the mock struct.
 func (m *mockServer) GetClient() core.AxgosHttpClient {
 	return m.client
 }
 
-func (m *mockServer) Start() {
+// Enable enables mocking responses.
+func (m *mockServer) Enable() {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	m.enabled = true
 }
 
-func (m *mockServer) Stop() {
+// Disable disables mocking responses.
+func (m *mockServer) Disable() {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	m.enabled = false
 }
 
+// IsEnabled checks if mocked responses are enabled or not.
 func (m *mockServer) IsEnabled() bool {
 	return m.enabled
 }
 
+// Add adds a mock to the mocks map.
+// When mocked responses are enabled, the client will return the
+// mock response stored in the mocks map instead of making an actual
+// http request.
 func (m *mockServer) Add(mock Mock) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
@@ -65,6 +73,7 @@ func (m *mockServer) Add(mock Mock) {
 	m.mocks[key] = &mock
 }
 
+// Flush removes all mocks from the mocks map.
 func (m *mockServer) Flush() {
 	m.mu.Lock()
 	defer m.mu.Unlock()

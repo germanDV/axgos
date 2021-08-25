@@ -11,6 +11,5 @@ HTTP client with:
 ## TODO
 
 * more tests
-* documentation in comments
 * documentation in this README
 * support for msgpack

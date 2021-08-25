@@ -5,6 +5,7 @@ import (
 	"net/http"
 )
 
+// AxgosResponse represents the response returned by http requests.
 type AxgosResponse struct {
 	StatusCode int
 	Status     string
