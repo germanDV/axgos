@@ -12,7 +12,7 @@ type mockServer struct {
 	enabled bool
 	mu      sync.Mutex
 	mocks   map[string]*Mock
-	client  core.AxgosClient
+	client  core.AxgosHttpClient
 }
 
 var MockServer = mockServer{
@@ -38,7 +38,7 @@ func (m *mockServer) cleanBody(body string) string {
 	return body
 }
 
-func (m *mockServer) GetClient() core.AxgosClient {
+func (m *mockServer) GetClient() core.AxgosHttpClient {
 	return m.client
 }
 

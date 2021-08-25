@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type clientBuilder struct {
+type axgosBuilder struct {
 	headers                   http.Header
 	maxIdleConnectionsPerHost int
 	connectionTimeout         time.Duration
@@ -15,56 +15,56 @@ type clientBuilder struct {
 	baseURL                   string
 }
 
-type ClientBuilder interface {
-	SetHeaders(headers http.Header) ClientBuilder
-	SetConnectionTimeout(timeout time.Duration) ClientBuilder
-	SetResponseTimeout(timeout time.Duration) ClientBuilder
-	SetMaxIdleConnectionsPerHost(connections int) ClientBuilder
-	DisableTimeouts() ClientBuilder
-	SetHttpClient(c *http.Client) ClientBuilder
-	SetBaseURL(url string) ClientBuilder
-	Build() Client
+type AxgosBuilder interface {
+	SetHeaders(headers http.Header) AxgosBuilder
+	SetConnectionTimeout(timeout time.Duration) AxgosBuilder
+	SetResponseTimeout(timeout time.Duration) AxgosBuilder
+	SetMaxIdleConnectionsPerHost(connections int) AxgosBuilder
+	DisableTimeouts() AxgosBuilder
+	SetHttpClient(c *http.Client) AxgosBuilder
+	SetBaseURL(url string) AxgosBuilder
+	Build() AxgosClient
 }
 
-func NewBuilder() ClientBuilder {
-	return &clientBuilder{}
+func NewBuilder() AxgosBuilder {
+	return &axgosBuilder{}
 }
 
-func (c *clientBuilder) SetHeaders(headers http.Header) ClientBuilder {
-	c.headers = headers
-	return c
+func (b *axgosBuilder) SetHeaders(headers http.Header) AxgosBuilder {
+	b.headers = headers
+	return b
 }
 
-func (c *clientBuilder) SetConnectionTimeout(timeout time.Duration) ClientBuilder {
-	c.connectionTimeout = timeout
-	return c
+func (b *axgosBuilder) SetConnectionTimeout(timeout time.Duration) AxgosBuilder {
+	b.connectionTimeout = timeout
+	return b
 }
 
-func (c *clientBuilder) SetResponseTimeout(timeout time.Duration) ClientBuilder {
-	c.responseTimeout = timeout
-	return c
+func (b *axgosBuilder) SetResponseTimeout(timeout time.Duration) AxgosBuilder {
+	b.responseTimeout = timeout
+	return b
 }
 
-func (c *clientBuilder) SetMaxIdleConnectionsPerHost(connections int) ClientBuilder {
-	c.maxIdleConnectionsPerHost = connections
-	return c
+func (b *axgosBuilder) SetMaxIdleConnectionsPerHost(connections int) AxgosBuilder {
+	b.maxIdleConnectionsPerHost = connections
+	return b
 }
 
-func (c *clientBuilder) DisableTimeouts() ClientBuilder {
-	c.disabledTimeouts = true
-	return c
+func (b *axgosBuilder) DisableTimeouts() AxgosBuilder {
+	b.disabledTimeouts = true
+	return b
 }
 
-func (c *clientBuilder) SetHttpClient(client *http.Client) ClientBuilder {
-	c.client = client
-	return c
+func (b *axgosBuilder) SetHttpClient(client *http.Client) AxgosBuilder {
+	b.client = client
+	return b
 }
 
-func (c *clientBuilder) SetBaseURL(url string) ClientBuilder {
-	c.baseURL = url
-	return c
+func (b *axgosBuilder) SetBaseURL(url string) AxgosBuilder {
+	b.baseURL = url
+	return b
 }
 
-func (c *clientBuilder) Build() Client {
-	return &httpClient{builder: c}
+func (b *axgosBuilder) Build() AxgosClient {
+	return &axgosClient{builder: b}
 }

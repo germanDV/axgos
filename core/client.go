@@ -2,6 +2,6 @@ package core
 
 import "net/http"
 
-type AxgosClient interface {
+type AxgosHttpClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }

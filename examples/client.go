@@ -8,7 +8,7 @@ import (
 
 var axgos = createClient()
 
-func createClient() gohttp.Client {
+func createClient() gohttp.AxgosClient {
 	headers := make(http.Header)
 	headers.Set("Content-Type", "application/json")
 	headers.Set("Accept", "application/json")

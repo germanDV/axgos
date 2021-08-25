@@ -5,7 +5,7 @@ import (
 )
 
 func TestGetReqBody(t *testing.T) {
-	client := httpClient{}
+	client := axgosClient{}
 
 	t.Run("No body", func(t *testing.T) {
 		body, err := client.getReqBody("", nil)

@@ -19,7 +19,7 @@ const (
 	defaultConnectionTimeout         = 2 * time.Second
 )
 
-func (c *httpClient) do(method string, url string, headers http.Header, body interface{}) (*core.AxgosResponse, error) {
+func (c *axgosClient) do(method string, url string, headers http.Header, body interface{}) (*core.AxgosResponse, error) {
 	// Combine common and request-specific headers
 	fullHeaders := c.getHeaders(headers)
 
@@ -44,7 +44,7 @@ func (c *httpClient) do(method string, url string, headers http.Header, body int
 	req.Header = fullHeaders
 
 	// Get a client (if nil, create one -> it's created on the first request)
-	client := c.getHttpClient()
+	client := c.getAxgosClient()
 
 	// Make request
 	res, err := client.Do(req)
@@ -68,7 +68,7 @@ func (c *httpClient) do(method string, url string, headers http.Header, body int
 	return &response, nil
 }
 
-func (c *httpClient) getHttpClient() core.AxgosClient {
+func (c *axgosClient) getAxgosClient() core.AxgosHttpClient {
 	if mock.MockServer.IsEnabled() {
 		return mock.MockServer.GetClient()
 	}
@@ -94,14 +94,14 @@ func (c *httpClient) getHttpClient() core.AxgosClient {
 	return c.client
 }
 
-func (c *httpClient) getMaxIdleConnectionsPerHost() int {
+func (c *axgosClient) getMaxIdleConnectionsPerHost() int {
 	if c.builder.maxIdleConnectionsPerHost > 0 {
 		return c.builder.maxIdleConnectionsPerHost
 	}
 	return defaultMaxIdleConnectionsPerHost
 }
 
-func (c *httpClient) getResponseTimeout() time.Duration {
+func (c *axgosClient) getResponseTimeout() time.Duration {
 	if c.builder.disabledTimeouts {
 		return 0
 	}
@@ -111,7 +111,7 @@ func (c *httpClient) getResponseTimeout() time.Duration {
 	return defaultResponseTimeout
 }
 
-func (c *httpClient) getConnectionTimeout() time.Duration {
+func (c *axgosClient) getConnectionTimeout() time.Duration {
 	if c.builder.disabledTimeouts {
 		return 0
 	}
@@ -121,7 +121,7 @@ func (c *httpClient) getConnectionTimeout() time.Duration {
 	return defaultConnectionTimeout
 }
 
-func (c *httpClient) getReqBody(contentType string, body interface{}) ([]byte, error) {
+func (c *axgosClient) getReqBody(contentType string, body interface{}) ([]byte, error) {
 	if body == nil {
 		return nil, nil
 	}
@@ -134,6 +134,6 @@ func (c *httpClient) getReqBody(contentType string, body interface{}) ([]byte, e
 	}
 }
 
-func (c *httpClient) getBaseURL() string {
+func (c *axgosClient) getBaseURL() string {
 	return c.builder.baseURL
 }

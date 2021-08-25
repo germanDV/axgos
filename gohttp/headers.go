@@ -10,7 +10,7 @@ func getHeaders(headers ...http.Header) http.Header {
 	return http.Header{}
 }
 
-func (c *httpClient) getHeaders(customHeaders http.Header) http.Header {
+func (c *axgosClient) getHeaders(customHeaders http.Header) http.Header {
 	ret := make(http.Header)
 
 	// Add common headers
