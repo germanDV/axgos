@@ -3,10 +3,8 @@ package examples
 import "errors"
 
 func Post(p BlogPost) (*BlogPost, error) {
-	url := "https://jsonplaceholder.typicode.com/posts"
-
 	// `axgos` is defined in client.go
-	res, err := axgos.Post(url, p)
+	res, err := axgos.Post("/posts", p)
 	if err != nil {
 		return nil, err
 	}

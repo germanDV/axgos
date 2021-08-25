@@ -29,6 +29,11 @@ func (c *httpClient) do(method string, url string, headers http.Header, body int
 		return nil, err
 	}
 
+	// Add base URL, if provided when building the client
+	if baseURL := c.getBaseURL(); baseURL != "" {
+		url = baseURL + url
+	}
+
 	// Create request
 	req, err := http.NewRequest(method, url, bytes.NewBuffer(reqBody))
 	if err != nil {
@@ -127,4 +132,8 @@ func (c *httpClient) getReqBody(contentType string, body interface{}) ([]byte, e
 	default:
 		return json.Marshal(body)
 	}
+}
+
+func (c *httpClient) getBaseURL() string {
+	return c.builder.baseURL
 }

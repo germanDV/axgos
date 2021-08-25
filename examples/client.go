@@ -18,6 +18,7 @@ func createClient() gohttp.Client {
 		SetConnectionTimeout(2 * time.Second).
 		SetResponseTimeout(3 * time.Second).
 		SetHeaders(headers).
+		SetBaseURL("https://jsonplaceholder.typicode.com").
 		Build()
 }
 

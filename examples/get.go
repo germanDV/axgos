@@ -6,7 +6,7 @@ import (
 )
 
 func Get(postID int) (*BlogPost, error) {
-	url := fmt.Sprintf("https://jsonplaceholder.typicode.com/posts/%d", postID)
+	url := fmt.Sprintf("/posts/%d", postID)
 
 	// `axgos` is defined in client.go.
 	// headers can be provided to Get as a second argument (type http.Header).

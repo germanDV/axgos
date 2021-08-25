@@ -10,7 +10,6 @@ HTTP client with:
 
 ## TODO
 
-* base URL configuration in the Builder
 * more tests
 * documentation in comments
 * documentation in this README
