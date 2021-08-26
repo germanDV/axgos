@@ -3,14 +3,18 @@ package examples
 import (
 	"errors"
 	"fmt"
+	"net/http"
 )
 
 func Get(postID int) (*BlogPost, error) {
 	url := fmt.Sprintf("/posts/%d", postID)
 
+	// create auth header
+	headers := make(http.Header)
+	headers.Set("Authorization", "Bearer my-token-abc123")
+
 	// `axgos` is defined in client.go.
-	// headers can be provided to Get as a second argument (type http.Header).
-	res, err := axgos.Get(url)
+	res, err := axgos.Get(url, headers) // with no headers: axgos.Get(url)
 	if err != nil {
 		return nil, err
 	}
@@ -22,7 +26,7 @@ func Get(postID int) (*BlogPost, error) {
 
 	// Unmarshal JSON response into Go struct.
 	var p BlogPost
-	err = res.UnmarshalJson(&p)
+	err = res.Unmarshal(&p)
 	if err != nil {
 		return nil, err
 	}

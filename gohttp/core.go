@@ -62,6 +62,7 @@ func (c *axgosClient) do(method string, url string, headers http.Header, body in
 	response := core.AxgosResponse{
 		StatusCode: res.StatusCode,
 		Status:     res.Status,
+		ReqHeaders: fullHeaders,
 		Headers:    res.Header,
 		Body:       respBody,
 	}

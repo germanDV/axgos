@@ -16,7 +16,7 @@ func Post(p BlogPost) (*BlogPost, error) {
 
 	// Unmarshal JSON response into Go struct.
 	var insertedPost BlogPost
-	err = res.UnmarshalJson(&insertedPost)
+	err = res.Unmarshal(&insertedPost)
 	if err != nil {
 		return nil, err
 	}

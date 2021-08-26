@@ -2,13 +2,16 @@ package core
 
 import (
 	"encoding/json"
+	"encoding/xml"
 	"net/http"
+	"strings"
 )
 
 // AxgosResponse represents the response returned by http requests.
 type AxgosResponse struct {
 	StatusCode int
 	Status     string
+	ReqHeaders http.Header
 	Headers    http.Header
 	Body       []byte
 }
@@ -28,7 +31,21 @@ func (r *AxgosResponse) String() string {
 	return string(r.Body)
 }
 
-// UnmarshalJson unmarshalls the response body into a Go struct.
-func (r *AxgosResponse) UnmarshalJson(target interface{}) error {
+// Unmarshal unmarshalls the response body into a Go struct.
+// The format will depend on the `Accept` request header, defaulting to JSON.
+func (r *AxgosResponse) Unmarshal(target interface{}) error {
+	accepts := r.ReqHeaders.Get("Accept")
+	accepts = strings.ToLower(accepts)
+
+	// If JSON is one of the accepted types, prioritize it
+	if strings.Contains(accepts, "application/json") {
+		return json.Unmarshal(r.Body, target)
+	}
+
+	if strings.Contains(accepts, "application/xml") {
+		return xml.Unmarshal(r.Body, target)
+	}
+
+	// Use JSON as default
 	return json.Unmarshal(r.Body, target)
 }
