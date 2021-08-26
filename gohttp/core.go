@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"encoding/xml"
+	"github.com/vmihailenco/msgpack/v5"
 	"gitlab.com/germanDV/axgos/core"
 	"gitlab.com/germanDV/axgos/mock"
 	"io"
@@ -141,6 +142,8 @@ func (c *axgosClient) getReqBody(contentType string, body interface{}) ([]byte, 
 	switch strings.ToLower(contentType) {
 	case "application/xml":
 		return xml.Marshal(body)
+	case "application/msgpack":
+		return msgpack.Marshal(body)
 	default:
 		return json.Marshal(body)
 	}

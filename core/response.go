@@ -3,6 +3,7 @@ package core
 import (
 	"encoding/json"
 	"encoding/xml"
+	"github.com/vmihailenco/msgpack/v5"
 	"net/http"
 	"strings"
 )
@@ -40,6 +41,10 @@ func (r *AxgosResponse) Unmarshal(target interface{}) error {
 	// If JSON is one of the accepted types, prioritize it
 	if strings.Contains(accepts, "application/json") {
 		return json.Unmarshal(r.Body, target)
+	}
+
+	if strings.Contains(accepts, "application/msgpack") {
+		return msgpack.Unmarshal(r.Body, target)
 	}
 
 	if strings.Contains(accepts, "application/xml") {

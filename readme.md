@@ -5,11 +5,10 @@ HTTP client with:
 * Mocking capabilities
 * Timeouts by default
 * A single *http.Client (concurrency safe)
-* No external dependencies
 * Support for `json` and `msgpack`
+* The only external dependency is to handle `msgpack`
 
 ## TODO
 
 * more tests
 * documentation in this README
-* support for msgpack
