@@ -1,4 +1,4 @@
-package gohttp
+package axgos
 
 import (
 	"bytes"
@@ -21,7 +21,7 @@ const (
 	defaultConnectionTimeout         = 2 * time.Second
 )
 
-func (c *axgosClient) do(method string, url string, headers http.Header, body interface{}) (*core.AxgosResponse, error) {
+func (c *axgosClient) do(method string, url string, headers http.Header, body interface{}) (*core.Response, error) {
 	// Combine common and request-specific headers
 	fullHeaders := c.getHeaders(headers)
 
@@ -60,7 +60,7 @@ func (c *axgosClient) do(method string, url string, headers http.Header, body in
 		return nil, err
 	}
 
-	response := core.AxgosResponse{
+	response := core.Response{
 		StatusCode: res.StatusCode,
 		Status:     res.Status,
 		ReqHeaders: fullHeaders,

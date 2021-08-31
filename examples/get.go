@@ -13,8 +13,8 @@ func Get(postID int) (*BlogPost, error) {
 	headers := make(http.Header)
 	headers.Set("Authorization", "Bearer my-token-abc123")
 
-	// `axgos` is defined in client.go.
-	res, err := axgos.Get(url, headers) // with no headers: axgos.Get(url)
+	// `client` is defined in client.go.
+	res, err := client.Get(url, headers)
 	if err != nil {
 		return nil, err
 	}
@@ -23,6 +23,10 @@ func Get(postID int) (*BlogPost, error) {
 	if !res.OK() {
 		return nil, errors.New(res.String())
 	}
+
+	fmt.Println(res.StatusCode)
+	fmt.Println(res.String())
+	fmt.Println(res.Bytes())
 
 	// Unmarshal JSON response into Go struct.
 	var p BlogPost

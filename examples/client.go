@@ -1,19 +1,19 @@
 package examples
 
 import (
-	"gitlab.com/germanDV/axgos/gohttp"
+	"gitlab.com/germanDV/axgos/axgos"
 	"net/http"
 	"time"
 )
 
-var axgos = createClient()
+var client = createClient()
 
-func createClient() gohttp.AxgosClient {
+func createClient() axgos.Client {
 	headers := make(http.Header)
 	headers.Set("Content-Type", "application/json")
 	headers.Set("Accept", "application/json")
 
-	return gohttp.
+	return axgos.
 		NewBuilder().
 		SetConnectionTimeout(2 * time.Second).
 		SetResponseTimeout(3 * time.Second).

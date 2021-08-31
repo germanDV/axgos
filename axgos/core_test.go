@@ -1,4 +1,4 @@
-package gohttp
+package axgos
 
 import (
 	"testing"

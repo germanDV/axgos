@@ -15,12 +15,12 @@ type Mock struct {
 	Error      error
 }
 
-func (m *Mock) GetResponse() (*core.AxgosResponse, error) {
+func (m *Mock) GetResponse() (*core.Response, error) {
 	if m.Error != nil {
 		return nil, m.Error
 	}
 
-	return &core.AxgosResponse{
+	return &core.Response{
 		StatusCode: m.StatusCode,
 		Status:     fmt.Sprintf("%d %s", m.StatusCode, http.StatusText(m.StatusCode)),
 		Body:       []byte(m.ResBody),

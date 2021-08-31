@@ -3,8 +3,8 @@ package examples
 import "errors"
 
 func Post(p BlogPost) (*BlogPost, error) {
-	// `axgos` is defined in client.go
-	res, err := axgos.Post("/posts", p)
+	// `client` is defined in client.go
+	res, err := client.Post("/posts", p)
 	if err != nil {
 		return nil, err
 	}
