@@ -247,3 +247,7 @@ mock.MockServer.Add(mock.Mock{
     ResBody:    `{"id": 4, "userId": 1, "title": "eum et est occaecati", "body": "etc"}`,
 })
 ```
+
+## NEXT STEPS
+
+Provide the ability to cancel requests.

@@ -38,7 +38,6 @@ func (r *Response) Unmarshal(target interface{}) error {
 	accepts := r.ReqHeaders.Get("Accept")
 	accepts = strings.ToLower(accepts)
 
-	// If JSON is one of the accepted types, prioritize it
 	if strings.Contains(accepts, "application/json") {
 		return json.Unmarshal(r.Body, target)
 	}
