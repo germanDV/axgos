@@ -5,8 +5,8 @@ HTTP client with:
 * Mocking capabilities
 * Timeouts by default
 * A single *http.Client (concurrency safe)
-* Support for `json` and `msgpack` (and `xml`)
-* The only external dependency is to handle `msgpack`
+* Works with `json`
+* No external dependencies
 
 ## QUICK-START
 
@@ -137,29 +137,7 @@ and _Accept_ headers.
 In both cases, the acceptable options are:
 
 * `application/json`
-* `application/msgpack`
 * `application/xml`
-
-### Support for [msgpack](https://msgpack.org/)
-
-If you wish to use **msgpack**, simply set the appropriate headers:
-
-```go
-headers := make(http.Header)
-headers.Set("Content-Type", "application/msgpack")
-headers.Set("Accept", "application/msgpack")
-```
-
-And add `msgpack` tags to your struct, building on the examples above:
-
-```go
-type BlogPost struct {
-    ID     int    `json:"id,omitempty" msgpack:"id,omitempty"`
-    Title  string `json:"title" msgpack:"title"`
-    Body   string `json:"body" msgpack:"body"`
-    UserID int    `json:"userId" msgpack:"userId"`
-}
-```
 
 ## TIMEOUT AND LIMITS
 
